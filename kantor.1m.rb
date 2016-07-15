@@ -5,6 +5,7 @@ require 'open-uri'
 require 'json'
 
 url = 'https://kantor.aliorbank.pl/forex/json/current'
+web_url = 'https://kantor.aliorbank.pl/forex'.freeze
 
 charset = nil
 json = open(url) do |f|
@@ -26,4 +27,11 @@ def color(direction)
   end
 end
 
-puts "#{currency["buy"]} | color=#{color(currency["direction"])}"
+content = <<HEREDOC
+#{currency["buy"]} | color=#{color(currency["direction"])}
+---
+alior | href=#{web_url}
+
+HEREDOC
+
+puts content
