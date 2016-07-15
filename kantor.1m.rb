@@ -18,4 +18,12 @@ currency = doc["currencies"].find do |currency|
   currency["currency1"] == "PLN" && currency["currency2"] == "USD"
 end
 
-puts currency["buy"]
+def color(direction)
+  if direction == 1
+    "green"
+  elsif direction == -1
+    "red"
+  end
+end
+
+puts "#{currency["buy"]} | color=#{color(currency["direction"])}"
