@@ -5,6 +5,7 @@ require 'open-uri'
 require 'json'
 
 url = 'https://kantor.aliorbank.pl/forex/json/current'
+web_url = 'https://kantor.aliorbank.pl/forex'
 
 charset = nil
 json = open(url) do |f|
@@ -26,4 +27,9 @@ def color(direction)
   end
 end
 
-puts "#{currency["buy"]} | color=#{color(currency["direction"])}"
+content = "
+#{currency["buy"]} | color=#{color(currency["direction"])}
+---
+alior | href=#{web_url}
+"
+puts content
