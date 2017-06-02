@@ -17,8 +17,12 @@ end
 
 doc = JSON.parse(json)
 
-currency = doc["currencies"].find do |currency|
+currency_usd = doc["currencies"].find do |currency|
   currency["currency1"] == "PLN" && currency["currency2"] == "USD"
+end
+
+currency_euro = doc["currencies"].find do |currency|
+  currency["currency1"] == "PLN" && currency["currency2"] == "EUR"
 end
 
 def color(direction)
@@ -43,7 +47,7 @@ def save_min_max(path, max, min, day)
 end
 
 load_min_max(file_path)
-current_value = Float(currency["buy"].gsub(',', '.')).round(4)
+current_value = Float(currency_euro["buy"].gsub(',', '.')).round(4)
 
 if current_value.nil?
   current_value = '---'
@@ -54,11 +58,11 @@ else
 end
 
 content = <<HEREDOC
-#{current_value} | color=#{color(currency["direction"])}
+$#{currency_usd['buy']} €#{currency_euro['buy']} | color=#{color(currency_euro["direction"])}
 ---
 alior | href=#{web_url}
-max: #{@max}
-min: #{@min}
+max: €#{@max}
+min: €#{@min}
 
 HEREDOC
 
